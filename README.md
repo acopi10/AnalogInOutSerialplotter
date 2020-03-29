@@ -1,16 +1,23 @@
 void setup() {
-  Serial.begin(9600);
-  pinMode(A0,INPUT);
-  pinMode(A1,INPUT);
+    Serial.begin(9600);
 }
+ 
+void loop(){
+int sensorVal=analogRead(A0);
+Serial.print("Sensor Value: ");
+Serial.print(sensorVal);
 
-void loop() {
-
-  int sensor1_data = analogRead(sensor1);
-  int sensor2_data = analogRead(sensor2);
-  long timestamp = millis();
-  
-  String dataline = String(sensor1_data) + "," + String(sensor2_data) + "," + timestamp + ";";
-  Serial.print(dataline);
-  delay(70); 
+float voltage = (sensorVal*5.0)/1024.0; 
+    Serial.print("Volts: ");
+    Serial.print(voltage);
+   
+  float pressure_pascal = (3.0*((float)voltage-0.48))*1000000.0; #calibration sensor to show 0 bar
+  float pressure_bar = pressure_pascal/10e5;
+    Serial.print("Pressure = ");
+    Serial.print(pressure_bar);
+    Serial.println(" bars");
+    Serial.print("Pressure = ");
+    
+    delay(100);
 }
+ 
